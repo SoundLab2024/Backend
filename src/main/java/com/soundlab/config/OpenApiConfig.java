@@ -22,10 +22,11 @@ import org.springframework.context.annotation.Configuration;
 )
 @OpenAPIDefinition(
     info = @Info(
-        title = "Ratatouille",
+        title = "${application.title}",
         version = "${application.version}",
         license = @License(
-            name = "MIT", url = "https://mit-license.org/"
+            name = "MIT",
+            url = "https://mit-license.org/"
         ),
         termsOfService = "${app.tos}",
         description = "${application.description}"

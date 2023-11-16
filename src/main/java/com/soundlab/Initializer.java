@@ -20,7 +20,7 @@ public class Initializer {
 
   private final UserRepository userRepository;
 
-private final PasswordEncoder encoder;
+  private final PasswordEncoder encoder;
 
   @Async
   @EventListener(value = ApplicationReadyEvent.class)

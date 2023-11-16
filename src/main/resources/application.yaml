@@ -42,6 +42,7 @@ logging:
 application:
   admin_routes: /api/administration/**
   public_routes: /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /webjars/swagger-ui/**, /api/authentication/**
+  title: Soundlab
   security:
     jwt:
       secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b

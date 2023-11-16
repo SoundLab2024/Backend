@@ -4,6 +4,8 @@ import com.soundlab.domain.User;
 import com.soundlab.dto.UserDTO;
 import com.soundlab.service.UserService;
 import com.soundlab.utils.response.Payload;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -34,7 +36,7 @@ public class UserController {
    * @return Info about the user or an error if the specified id is not present
    */
   @GetMapping("{id}")
-  public UserDTO getSingle(@PathVariable("id") String id) {
+  public UserDTO getSingle(@Email @PathVariable("id") String id) {
     return this.service.getSingle(id);
   }
 
@@ -56,7 +58,7 @@ public class UserController {
    * @return Status of the operation in a form of payload
    */
   @PostMapping
-  public Payload insert(@RequestBody User user) {
+  public Payload insert(@Valid @RequestBody User user) {
     return this.service.insert(user);
   }
 
@@ -67,7 +69,7 @@ public class UserController {
    * @return Status of the operation in a form of payload
    */
   @PutMapping
-  public Payload update(@RequestBody User user) {
+  public Payload update(@Valid @RequestBody User user) {
     return this.service.update(user);
   }
 
@@ -78,7 +80,7 @@ public class UserController {
    * @return Status of the operation in a form of payload
    */
   @DeleteMapping("{id}")
-  public Payload delete(@PathVariable("id") String id) {
+  public Payload delete(@Email @PathVariable("id") String id) {
     return this.service.delete(id);
   }
 }

@@ -64,7 +64,7 @@ public class SecurityConfig {
          + Disable Cross-Site Request Forgery
          + Disable basic form login & httpBasic as we are not going to use in a Web Browser
 
-         The security context in a WebFlux application is stored in a ServerSecurityContextRepository.
+         The security context in a application is stored in a ServerSecurityContextRepository.
          Its WebSessionServerSecurityContextRepository implementation, which is used by default,
          stores the context in session. Configuring a NoOpServerSecurityContextRepository instead
          would make our application stateless

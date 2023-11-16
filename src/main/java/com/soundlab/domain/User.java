@@ -9,6 +9,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -39,14 +41,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User extends AuditModel implements UserDetails {
 
   @Id
+  @NotNull(message = "La mail è richiesta")
+  @NotBlank(message = "La mail è richiesta")
   private String email;
 
+  @NotNull(message = "Lo username è richiesto")
+  @NotBlank(message = "Lo username è richiesto")
   @Column(name = "username")
   private String username;
 
   @Column(name = "phone_number")
   private String phoneNumber;
 
+  @NotNull(message = "La password è richiesta")
+  @NotBlank(message = "La password è richiesta")
   @Column(name = "password")
   private String password;
 

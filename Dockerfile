@@ -21,5 +21,5 @@ COPY --from=optimizer /optimizer/dependencies/ ./
 COPY --from=optimizer /optimizer/spring-boot-loader/ ./
 COPY --from=optimizer /optimizer/snapshot-dependencies/ ./
 COPY --from=optimizer /optimizer/application/ ./
- # If a specific docker options are setted into application properties enable it: "-Dspring.profiles.active=docker"
+# If a specific docker options are setted into application properties enable it: "-Dspring.profiles.active=docker"
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
