@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "SoundLab": {
+      "Name": "Soundlab",
+      "Group": "Servers",
+      "Port": 5432,
+      "Username": "root",
+      "Password": "password",
+      "Host": "db",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres"
+    }
+  }
+}

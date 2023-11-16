@@ -1,0 +1,52 @@
+### Server options ###
+server:
+  address: localhost
+  port: 8080
+  error:
+    include-message: always
+    include-stacktrace: always
+
+spring:
+  application:
+    name: soundlab
+  datasource:
+    url: jdbc:postgresql://localhost:5432/soundlab
+    username: soundlab
+    password: change_me
+  ### JPA (Java Persistence API -> https://www.javatpoint.com/spring-boot-jpa) ###
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      # create-drop good for testing, production set to non or commit
+      ddl-auto: create-drop
+    show-sql: true
+  servlet:
+    multipart:
+      enabled: true
+      # Threshold after which files are stored to disk
+      file-size-threshold: 2MB
+      # Max file size for each request
+      max-file-size: 10MB
+      # max request size for a multipart/form-data
+      max-request-size: 10MB
+
+# TRACE < DEBUG < INFO < WARN < ERROR
+logging:
+  level:
+    root: INFO
+    web: INFO
+    com:
+      # Project related logs
+      soundlab: DEBUG
+
+application:
+  admin_routes: /api/administration/**
+  public_routes: /v3/api-docs/**, /swagger-ui/**, /swagger-ui.html, /webjars/swagger-ui/**, /api/authentication/**
+  security:
+    jwt:
+      secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+      expiration: 86400000 # a day (604800000 7 days)
+  description: API for the management of users, classrooms and their properties of Ratatouille framework
+  version: 1.0.0
+
+debug: true

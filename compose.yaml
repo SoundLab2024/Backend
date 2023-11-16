@@ -1,0 +1,61 @@
+version: '3.9'
+services:
+  # PostgreSQL
+  db:
+    container_name: postgres
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-root}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-soundlab}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-U", '${POSTGRES_USER:-root}', "-d", '${POSTGRES_DB:-soundlab}']
+      interval: 30s
+      timeout: 20s
+      retries: 5
+    networks:
+      - backend
+  # PgAdmin pre-configured
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@mail.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - 5050:80
+    volumes:
+      # Enable auto configuration for server connection
+      - ./config/servers.json:/pgadmin4/servers.json
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - db
+    networks:
+      - backend
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: build
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend
+
+
+
+volumes:
+  postgres:
+  pgadmin:
+
+networks:
+  backend:
+    driver: bridge
