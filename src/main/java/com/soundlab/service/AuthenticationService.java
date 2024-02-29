@@ -84,6 +84,7 @@ public class AuthenticationService {
             && !dto.oldPassword().equals(dto.newPassword())
     ) {
       u.setPassword(encoder.encode(dto.newPassword()));
+      u.setActive(true);
       this.repository.save(u);
       return Payload
           .builder()

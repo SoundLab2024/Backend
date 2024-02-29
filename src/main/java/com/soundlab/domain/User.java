@@ -45,8 +45,8 @@ public class User extends AuditModel implements UserDetails {
   @NotBlank(message = "La mail è richiesta")
   private String email;
 
-  @NotNull(message = "Lo username è richiesto")
-  @NotBlank(message = "Lo username è richiesto")
+  /*@NotNull(message = "Lo username è richiesto")
+  @NotBlank(message = "Lo username è richiesto")*/
   @Column(name = "username")
   private String username;
 
