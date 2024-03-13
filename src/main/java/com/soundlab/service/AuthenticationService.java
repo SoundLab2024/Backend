@@ -33,7 +33,7 @@ public class AuthenticationService {
           .build();
     }
 
-    this.repository.save(
+    var s = this.repository.save(
         User
             .builder()
             .email(dto.email())
@@ -42,8 +42,11 @@ public class AuthenticationService {
             // TODO: Add the other fields if needed
             .build()
     );
+
+    String token = jwtService.generateToken(s);
+
     return Payload.builder().statusCode(HttpStatus.OK.value())
-        .msg("Operazione completata con successo").build();
+        .msg(token).build();
   }
 
 
