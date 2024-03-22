@@ -28,12 +28,12 @@ public class Initializer {
     logger.info("Populating sample users");
     userRepository.saveAll(List.of(
         // Used for swagger ui
-        User.builder().email("string").password(encoder.encode("string")).build(),
-        User.builder().email("email1@mail.com").password(encoder.encode("password")).build(),
-        User.builder().email("email2@mail.com").password(encoder.encode("password")).build(),
-        User.builder().email("email3@mail.com").password(encoder.encode("password")).build(),
-        User.builder().email("email4@mail.com").password(encoder.encode("password")).build(),
-        User.builder().email("email5@mail.com").password(encoder.encode("password")).build()
+        User.builder().username("user").email("string").password(encoder.encode("string")).build(),
+        User.builder().username("user").email("email1@mail.com").password(encoder.encode("password")).build(),
+        User.builder().username("user").email("email2@mail.com").password(encoder.encode("password")).build(),
+        User.builder().username("user").email("email3@mail.com").password(encoder.encode("password")).build(),
+        User.builder().username("user").email("email4@mail.com").password(encoder.encode("password")).build(),
+        User.builder().username("user").email("email5@mail.com").password(encoder.encode("password")).build()
     ));
 
     logger.info("Done initialization!");
