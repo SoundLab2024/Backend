@@ -29,11 +29,7 @@ public class Initializer {
     userRepository.saveAll(List.of(
         // Used for swagger ui
         User.builder().username("user").email("string").password(encoder.encode("string")).active(true).build(),
-        User.builder().username("user").email("email1@mail.com").password(encoder.encode("password")).build(),
-        User.builder().username("user").email("email2@mail.com").password(encoder.encode("password")).build(),
-        User.builder().username("user").email("email3@mail.com").password(encoder.encode("password")).build(),
-        User.builder().username("user").email("email4@mail.com").password(encoder.encode("password")).build(),
-        User.builder().username("user").email("email5@mail.com").password(encoder.encode("password")).build()
+        User.builder().username("user1").email("email1@mail.com").password(encoder.encode("password")).build()
     ));
 
     logger.info("Done initialization!");

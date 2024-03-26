@@ -2,6 +2,8 @@ package com.soundlab.dto;
 
 import lombok.Builder;
 
+import java.sql.Date;
+
 /**
  * Record representing the credentials to make authentication requests
  *
@@ -9,6 +11,4 @@ import lombok.Builder;
  * @param password password of the client (user)
  */
 @Builder
-public record CredentialsDTO(String email, String password) {
-
-}
+public record CredentialsDTO(String email, String password, String username, String gender, Date birth) { }

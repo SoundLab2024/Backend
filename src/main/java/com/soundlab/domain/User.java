@@ -1,6 +1,7 @@
 package com.soundlab.domain;
 
 
+import com.soundlab.domain.properties.Gender;
 import com.soundlab.domain.properties.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +12,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -18,6 +21,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -50,9 +54,6 @@ public class User extends AuditModel implements UserDetails {
   @Column(name = "username")
   private String username;
 
-  @Column(name = "phone_number")
-  private String phoneNumber;
-
   @NotNull(message = "La password è richiesta")
   @NotBlank(message = "La password è richiesta")
   @Column(name = "password")
@@ -61,6 +62,14 @@ public class User extends AuditModel implements UserDetails {
   @Enumerated(EnumType.STRING)
   @Column(name = "role")
   private Role role;
+
+  @Column(name = "birth")
+  @DateTimeFormat(pattern="yyyy-MM-dd")
+  private Date birth;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "gender")
+  private Gender gender;
 
   @Column(name = "active", columnDefinition = "boolean default true")
   private boolean active;
