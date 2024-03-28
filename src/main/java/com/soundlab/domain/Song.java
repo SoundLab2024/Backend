@@ -1,6 +1,6 @@
 package com.soundlab.domain;
 
-import com.soundlab.domain.properties.TracciaType;
+import com.soundlab.domain.properties.SongType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,9 +14,9 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "traccia")
+@Table(name = "songs")
 
-public class Traccia extends AuditModel{
+public class Song extends AuditModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,43 +24,46 @@ public class Traccia extends AuditModel{
 
     @NotNull(message = "Il titolo è richiesto")
     @NotBlank(message = "Il titolo è richiesto")
-    private String titolo;
+    @Column(name = "title")
+    private String title;
 
     @NotNull(message = "L'anno è richiesto")
-    private Integer anno;
+    @Column(name = "year")
+    private Integer year;
 
     @NotNull(message = "Il genere è richiesto")
     @NotBlank(message = "Il genere è richiesto")
-    private String genere;
+    @Column(name = "genre")
+    private String genre;
 
     @NotNull(message = "Il tipo della traccia è richiesto")
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private TracciaType type;
+    private SongType type;
 
-    @Column(name = "numero_artisti")
-    private Integer numeroArtisti;
+    @Column(name = "artists_number")
+    private Integer artistsNumber;
 
     @ManyToOne
     @JoinColumn(name = "album_id")
     private Album album;
 
-    @OneToMany(mappedBy = "traccia", fetch = FetchType.EAGER)
-    private Set<Ascolto> ascolto;
+    @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
+    private Set<Listening> listenings;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "collab",
-            joinColumns = @JoinColumn(name = "traccia_id"),
+    @JoinTable(name = "collabs",
+            joinColumns = @JoinColumn(name = "song_id"),
             inverseJoinColumns = @JoinColumn(name = "artist_id")
     )
     @NotNull(message = "I riferimenti agli artisti sono richiesti")
-    private Set<Artist> artist;
+    private Set<Artist> artists;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "aggiungi",
-            joinColumns = @JoinColumn(name = "traccia_id"),
+    @JoinTable(name = "adds",
+            joinColumns = @JoinColumn(name = "song_id"),
             inverseJoinColumns = @JoinColumn(name = "playlist_id")
     )
-    private Set<Playlist> playlist;
+    private Set<Playlist> playlists;
 
 }

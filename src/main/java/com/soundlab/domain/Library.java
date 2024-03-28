@@ -12,20 +12,19 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "libreria")
+@Table(name = "libraries")
 
-public class Libreria extends AuditModel{
+public class Library extends AuditModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "numero_playlist")
-    @Builder.Default
-    private Integer numeroPlaylist = 0;
+    @Column(name = "playlists_number")
+    private Integer playlistsNumber;
 
-    @OneToMany(mappedBy = "libreria", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Playlist> playlist;
+    @OneToMany(mappedBy = "library", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Playlist> playlists;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "email")

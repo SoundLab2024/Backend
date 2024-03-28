@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "playlist")
+@Table(name = "playlists")
 
 public class Playlist extends AuditModel{
 
@@ -23,23 +23,25 @@ public class Playlist extends AuditModel{
 
     @NotNull(message = "Il nome è richiesto")
     @NotBlank(message = "Il nome è richiesto")
-    private String nome;
+    @Column(name = "name")
+    private String name;
 
     @NotNull(message = "Il numero delle tracce è richiesto")
-    @Column(name = "numero_tracce")
-    @Builder.Default
-    private Integer numeroTracce = 0;
+    @Column(name = "songs_number", columnDefinition = "integer default 0")
+    private Integer songsNumber;
 
-    private String genere;
+    @Column(name = "genre")
+    private String genre;
 
-    @NotNull
-    private Boolean preferita = false;
+    @NotNull (message = "La preferenza delle tracce è richiesta")
+    @Column(name = "favourite", columnDefinition = "boolean default false")
+    private boolean favourite;
 
     @ManyToOne
-    @JoinColumn(name = "libreria_id")
+    @JoinColumn(name = "library_id")
     @NotNull(message = "Il riferimento alla libreria è richiesto")
-    private Libreria libreria;
+    private Library library;
 
-    @ManyToMany(mappedBy = "playlist", fetch = FetchType.EAGER)
-    private Set<Traccia> traccia;
+    @ManyToMany(mappedBy = "playlists", fetch = FetchType.EAGER)
+    private Set<Song> songs;
 }

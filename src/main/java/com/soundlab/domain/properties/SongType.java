@@ -1,6 +1,6 @@
 package com.soundlab.domain.properties;
 
-public enum TracciaType {
+public enum SongType {
 
     ORIGINAL {
         @Override

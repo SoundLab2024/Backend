@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -14,7 +15,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "artist")
+@Table(name = "artists")
 
 public class Artist extends AuditModel{
 
@@ -24,18 +25,22 @@ public class Artist extends AuditModel{
 
     @NotNull(message = "Il nome è richiesto")
     @NotBlank(message = "Il nome è richiesto")
-    private String nome;
+    @Column(name = "name")
+    private String name;
 
-    private LocalDate dataNascita;
+    @Column(name = "birth")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date birth;
 
     @NotNull(message = "La nazionalita è richiesta")
     @NotBlank(message = "La nazionalita è richiesta")
-    private String nazionalita;
+    @Column(name = "nationality")
+    private String nationality;
 
     @OneToMany (mappedBy = "artist", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Album> album;
+    private Set<Album> albums;
 
-    @ManyToMany(mappedBy = "artist", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Traccia> traccia;
+    @ManyToMany(mappedBy = "artists", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Song> songs;
 
 }

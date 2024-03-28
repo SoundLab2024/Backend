@@ -3,19 +3,15 @@ package com.soundlab.domain;
 
 import com.soundlab.domain.properties.Gender;
 import com.soundlab.domain.properties.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -73,6 +69,13 @@ public class User extends AuditModel implements UserDetails {
 
   @Column(name = "active", columnDefinition = "boolean default true")
   private boolean active;
+
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+  private Set<Listening> listenings;
+
+  @OneToOne
+  @JoinColumn(name = "library_id")
+  private Library library;
 
 
   @Override

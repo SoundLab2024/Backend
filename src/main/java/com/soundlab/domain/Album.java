@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "album")
+@Table(name = "albums")
 
 public class Album extends AuditModel{
 
@@ -23,9 +23,11 @@ public class Album extends AuditModel{
 
     @NotNull(message = "Il nome è richiesto")
     @NotBlank(message = "Il nome è richiesto")
-    private String nome;
+    @Column(name = "name")
+    private String name;
 
-    private Integer anno;
+    @Column(name = "year")
+    private Integer year;
 
     @ManyToOne
     @JoinColumn(name = "artist_id")
@@ -33,5 +35,5 @@ public class Album extends AuditModel{
     private Artist artist;
 
     @OneToMany(mappedBy = "album", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Traccia> traccia;
+    private Set<Song> songs;
 }

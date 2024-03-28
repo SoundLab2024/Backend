@@ -1,11 +1,13 @@
 package com.soundlab.domain;
 
-import com.soundlab.domain.properties.FasciaOrariaType;
+import com.soundlab.domain.properties.TimeSlot;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
+
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -13,21 +15,23 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ascolto")
+@Table(name = "listenings")
 
-public class Ascolto extends AuditModel{
+public class Listening extends AuditModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "la data è richiesta")
-    private LocalDateTime data;
+    @Column(name = "data")
+    @DateTimeFormat(pattern = "dd-MM-YYYY HH:MM")
+    private Date data;
 
     @NotNull(message = "La fascia oraria è richiesta")
     @Enumerated(EnumType.STRING)
-    @Column(name = "fascia_oraria")
-    private FasciaOrariaType fasciaOraria;
+    @Column(name = "time_slot")
+    private TimeSlot timeSlot;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -35,8 +39,8 @@ public class Ascolto extends AuditModel{
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "traccia_id")
+    @JoinColumn(name = "song_id")
     @NotNull(message = "Il riferimento alla traccia è richiesto")
-    private Traccia traccia;
+    private Song song;
 
 }
