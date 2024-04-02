@@ -29,8 +29,8 @@ public class UserController {
    */
   private final UserService service;
 
-  @GetMapping("{token}")
-  public UserDTO getCurrentUserDetails(@PathVariable ("token") String token) { return this.service.getCurrentUserDetails(token); }
+  @GetMapping("retrieve/{token}")
+  public UserDTO getCurrentUserDetails(@PathVariable("token") String token) { return this.service.getCurrentUserDetails(token); }
 
   /**
    * Retrieve a single user from the database
