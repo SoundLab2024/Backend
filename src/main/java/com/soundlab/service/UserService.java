@@ -3,6 +3,7 @@ package com.soundlab.service;
 import com.soundlab.domain.User;
 import com.soundlab.dto.UserDTO;
 import com.soundlab.repository.UserRepository;
+import com.soundlab.security.JWTService;
 import com.soundlab.service.base.BaseService;
 import com.soundlab.utils.exceptions.UserNotFoundException;
 import com.soundlab.utils.mappers.UserMapper;
@@ -18,6 +19,21 @@ public class UserService implements BaseService<User, UserDTO, String, Payload> 
 
   private final UserRepository repository;
   private final UserMapper mapper;
+  private final JWTService jwtService;
+
+
+  public UserDTO getCurrentUserDetails(String token){
+
+    String email = this.jwtService.extractUsername(token);
+    User u = this.repository.findById(email).orElseThrow(() -> new UserNotFoundException(email));
+
+    UserDTO dto = new UserDTO();
+    dto.setEmail(u.getEmail());
+    dto.setUsername(u.getUsername());
+    dto.setRole(u.getRole().toString());
+
+    return dto;
+  }
 
   @Override
   public UserDTO getSingle(String id) {

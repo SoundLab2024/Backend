@@ -43,6 +43,7 @@ public class AuthenticationService {
                         .password(encoder.encode(dto.password()))
                         .username(dto.username())
                         .role(Role.USER)
+                        .birth(dto.birth())
                         .gender(Gender.getGender(dto.gender()))
                         .active(true)
                         .build()

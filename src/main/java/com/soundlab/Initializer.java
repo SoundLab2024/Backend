@@ -1,6 +1,8 @@
 package com.soundlab;
 
 import com.soundlab.domain.User;
+import com.soundlab.domain.properties.Gender;
+import com.soundlab.domain.properties.Role;
 import com.soundlab.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +30,7 @@ public class Initializer {
     logger.info("Populating sample users");
     userRepository.saveAll(List.of(
         // Used for swagger ui
-        User.builder().username("user").email("string").password(encoder.encode("string")).active(true).build(),
-        User.builder().username("user1").email("email1@mail.com").password(encoder.encode("password")).build()
+        User.builder().username("user").email("string").password(encoder.encode("string")).active(true).role(Role.ADMIN).gender(Gender.Male).build()
     ));
 
     logger.info("Done initialization!");
