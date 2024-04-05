@@ -70,7 +70,7 @@ public class User extends AuditModel implements UserDetails {
   @Column(name = "active", columnDefinition = "boolean default true")
   private boolean active;
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
   private Set<Listening> listenings;
 
   @OneToOne
@@ -92,6 +92,8 @@ public class User extends AuditModel implements UserDetails {
   public String getUsername() {
     return email;
   }
+
+  public String getName(){ return username; }
 
   @Override
   public boolean isAccountNonExpired() {
