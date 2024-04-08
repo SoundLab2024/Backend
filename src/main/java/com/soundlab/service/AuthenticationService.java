@@ -1,10 +1,12 @@
 package com.soundlab.service;
 
+import com.soundlab.domain.Library;
 import com.soundlab.domain.User;
 import com.soundlab.domain.properties.Gender;
 import com.soundlab.domain.properties.Role;
 import com.soundlab.dto.CredentialsDTO;
 import com.soundlab.dto.RegistrationDTO;
+import com.soundlab.repository.LibraryRepository;
 import com.soundlab.repository.UserRepository;
 import com.soundlab.security.JWTService;
 import com.soundlab.utils.exceptions.UserNotFoundException;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
     private final UserRepository repository;
+    private final LibraryRepository libraryRepo;
     private final PasswordEncoder encoder;
     private final AuthenticationManager manager;
     private final JWTService jwtService;
@@ -30,27 +33,34 @@ public class AuthenticationService {
             return Payload
                     .builder()
                     .statusCode(HttpStatus.CONFLICT.value())
-                    .msg(
-                            "Impossibile completare la richiesta. La email specificata è già presente nel sistema")
+                    .msg("Impossibile completare la richiesta. La email specificata è già presente nel sistema")
                     .build();
         }
 
-        var s = this.repository.save(
-                User
+        var s = User
+                .builder()
+                .email(dto.email())
+                .password(encoder.encode(dto.password()))
+                .username(dto.username())
+                .role(Role.USER)
+                .birth(dto.birth())
+                .gender(Gender.getGender(dto.gender()))
+                .active(true)
+                .build();
+        s = this.repository.save(s);
+
+        var l = this.libraryRepo.save(
+                Library
                         .builder()
-                        .email(dto.email())
-                        // Save the password in an encrypted way
-                        .password(encoder.encode(dto.password()))
-                        .username(dto.username())
-                        .role(Role.USER)
-                        .birth(dto.birth())
-                        .gender(Gender.getGender(dto.gender()))
-                        .active(true)
+                        .user(s)
+                        .playlistsNumber(0)
                         .build()
         );
 
-        String token = jwtService.generateToken(s);
+        s.setLibrary(l);
+        this.repository.save(s);
 
+        String token = jwtService.generateToken(s);
         return Payload.builder().statusCode(HttpStatus.OK.value())
                 .msg(token).build();
     }

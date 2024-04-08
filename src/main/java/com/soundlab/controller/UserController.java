@@ -29,6 +29,9 @@ public class UserController {
    */
   private final UserService service;
 
+  /**
+   * Retrieve a user from his JWT token
+   */
   @GetMapping("retrieve/{token}")
   public UserDTO getCurrentUserDetails(@PathVariable("token") String token) { return this.service.getCurrentUserDetails(token); }
 

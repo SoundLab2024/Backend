@@ -1,7 +1,9 @@
 package com.soundlab.service;
 
+import com.soundlab.domain.Library;
 import com.soundlab.domain.User;
 import com.soundlab.dto.UserDTO;
+import com.soundlab.repository.LibraryRepository;
 import com.soundlab.repository.UserRepository;
 import com.soundlab.security.JWTService;
 import com.soundlab.service.base.BaseService;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class UserService implements BaseService<User, UserDTO, String, Payload> {
 
     private final UserRepository repository;
+    private final LibraryRepository libraryRepo;
     private final UserMapper mapper;
     private final JWTService jwtService;
 
@@ -51,6 +54,15 @@ public class UserService implements BaseService<User, UserDTO, String, Payload> 
                     .build();
         }
 
+        var l = this.libraryRepo.save(
+                Library
+                        .builder()
+                        .user(u)
+                        .playlistsNumber(0)
+                        .build()
+        );
+
+        u.setLibrary(l);
         this.repository.save(u);
         return Payload
                 .builder()
