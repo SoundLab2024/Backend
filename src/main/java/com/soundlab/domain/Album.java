@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "albums")
+@Table(name = "album")
 
 public class Album extends AuditModel{
 
@@ -34,6 +34,6 @@ public class Album extends AuditModel{
     @NotNull(message = "Il riferimento all'artista è richiesto")
     private Artist artist;
 
-    @OneToMany(mappedBy = "album", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "album", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Song> songs;
 }

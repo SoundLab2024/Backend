@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "songs")
+@Table(name = "song")
 
 public class Song extends AuditModel{
 
@@ -48,10 +48,10 @@ public class Song extends AuditModel{
     @JoinColumn(name = "album_id")
     private Album album;
 
-    @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "song", fetch = FetchType.LAZY)
     private Set<Listening> listenings;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "collabs",
             joinColumns = @JoinColumn(name = "song_id"),
             inverseJoinColumns = @JoinColumn(name = "artist_id")
@@ -59,7 +59,7 @@ public class Song extends AuditModel{
     @NotNull(message = "I riferimenti agli artisti sono richiesti")
     private Set<Artist> artists;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "adds",
             joinColumns = @JoinColumn(name = "song_id"),
             inverseJoinColumns = @JoinColumn(name = "playlist_id")

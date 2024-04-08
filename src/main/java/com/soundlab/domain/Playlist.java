@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "playlists")
+@Table(name = "playlist")
 
 public class Playlist extends AuditModel{
 
@@ -42,6 +42,6 @@ public class Playlist extends AuditModel{
     @NotNull(message = "Il riferimento alla libreria è richiesto")
     private Library library;
 
-    @ManyToMany(mappedBy = "playlists", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "playlists", fetch = FetchType.LAZY)
     private Set<Song> songs;
 }

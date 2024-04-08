@@ -15,7 +15,7 @@ import java.sql.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "listenings")
+@Table(name = "listening")
 
 public class Listening extends AuditModel{
 

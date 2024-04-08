@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "artists")
+@Table(name = "artist")
 
 public class Artist extends AuditModel{
 
@@ -37,10 +37,10 @@ public class Artist extends AuditModel{
     @Column(name = "nationality")
     private String nationality;
 
-    @OneToMany (mappedBy = "artist", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "artist", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Album> albums;
 
-    @ManyToMany(mappedBy = "artists", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "artists", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Song> songs;
 
 }

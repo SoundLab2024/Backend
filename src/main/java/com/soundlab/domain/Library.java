@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "libraries")
+@Table(name = "library")
 
 public class Library extends AuditModel{
 
@@ -23,7 +23,7 @@ public class Library extends AuditModel{
     @Column(name = "playlists_number")
     private Integer playlistsNumber;
 
-    @OneToMany(mappedBy = "library", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Playlist> playlists;
 
     @OneToOne
