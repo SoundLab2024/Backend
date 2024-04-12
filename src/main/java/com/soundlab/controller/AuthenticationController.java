@@ -4,6 +4,7 @@ import com.soundlab.dto.CredentialsDTO;
 import com.soundlab.dto.RegistrationDTO;
 import com.soundlab.service.AuthenticationService;
 import com.soundlab.utils.response.Payload;
+import com.soundlab.utils.response.UserPayload;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +32,7 @@ public class AuthenticationController {
    * @return Status of the operation in a form of payload
    */
   @PostMapping("register")
-  public Payload register(@Valid @RequestBody CredentialsDTO dto) {
+  public UserPayload register(@Valid @RequestBody CredentialsDTO dto) {
     return this.service.register(dto);
   }
 
@@ -42,7 +43,7 @@ public class AuthenticationController {
    * @return Status of the operation in a form of payload
    */
   @PostMapping("authenticate")
-  public Payload authenticate(@Valid @RequestBody CredentialsDTO dto) {
+  public UserPayload authenticate(@Valid @RequestBody CredentialsDTO dto) {
     return this.service.authenticate(dto);
   }
 

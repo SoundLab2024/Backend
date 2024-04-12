@@ -50,4 +50,8 @@ application:
   description: API for the management of users, classrooms and their properties of Ratatouille framework
   version: 1.0.0
 
+springdoc:
+  swagger-ui:
+    doc-expansion: none
+
 debug: true

@@ -11,6 +11,7 @@ import com.soundlab.repository.UserRepository;
 import com.soundlab.security.JWTService;
 import com.soundlab.utils.exceptions.UserNotFoundException;
 import com.soundlab.utils.response.Payload;
+import com.soundlab.utils.response.UserPayload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,13 +29,9 @@ public class AuthenticationService {
     private final AuthenticationManager manager;
     private final JWTService jwtService;
 
-    public Payload register(CredentialsDTO dto) {
+    public UserPayload register(CredentialsDTO dto) {
         if (this.repository.findById(dto.email()).isPresent()) {
-            return Payload
-                    .builder()
-                    .statusCode(HttpStatus.CONFLICT.value())
-                    .msg("Impossibile completare la richiesta. La email specificata è già presente nel sistema")
-                    .build();
+
         }
 
         var s = User
@@ -61,12 +58,17 @@ public class AuthenticationService {
         this.repository.save(s);
 
         String token = jwtService.generateToken(s);
-        return Payload.builder().statusCode(HttpStatus.OK.value())
-                .msg(token).build();
+        return UserPayload.builder()
+                .token(token)
+                .libraryId(s.getLibrary().getId())
+                .username(s.getName())
+                .email(s.getEmail())
+                .role(s.getRole().toString())
+                .build();
     }
 
 
-    public Payload authenticate(CredentialsDTO dto) {
+    public UserPayload authenticate(CredentialsDTO dto) {
         manager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         dto.email(),
@@ -78,10 +80,13 @@ public class AuthenticationService {
                 .orElseThrow(() -> new UserNotFoundException(dto.email()));
 
         String token = jwtService.generateToken(u);
-        return Payload
+        return UserPayload
                 .builder()
-                .statusCode(HttpStatus.OK.value())
-                .msg(token)
+                .token(token)
+                .libraryId(u.getLibrary().getId())
+                .username(u.getName())
+                .email(u.getEmail())
+                .role(u.getRole().toString())
                 .build();
     }
 
