@@ -26,8 +26,7 @@ public class LibraryService implements BaseService<Library, LibraryDTO, Long, Pa
 
     @Override
     public LibraryDTO getSingle(Long id) {
-        //return this.mapper.toDTO(this.repository.findById(id).orElseThrow(()->new LibraryNotFoundException(String.valueOf(id))));
-        return null;
+        return this.mapper.toDTO(this.repository.findById(id).orElseThrow(()->new LibraryNotFoundException(String.valueOf(id))));
     }
 
     @Override

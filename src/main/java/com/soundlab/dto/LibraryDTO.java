@@ -24,7 +24,7 @@ public class LibraryDTO implements Serializable {
     /**
      * List of playlists in the lib
      */
-    @JsonProperty("playlists")
-    private Set<PlaylistDTO> playlists;
+    //@JsonProperty("playlists")
+    //private Set<PlaylistDTO> playlists;
 
 }

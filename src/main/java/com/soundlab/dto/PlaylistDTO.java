@@ -23,7 +23,4 @@ public class PlaylistDTO {
     @JsonProperty
     private boolean favourite;
 
-    @JsonProperty
-    private Set<SongDTO> songs;
-
 }

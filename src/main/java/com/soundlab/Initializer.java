@@ -1,10 +1,12 @@
 package com.soundlab;
 
 import com.soundlab.domain.Library;
+import com.soundlab.domain.Playlist;
 import com.soundlab.domain.User;
 import com.soundlab.domain.properties.Gender;
 import com.soundlab.domain.properties.Role;
 import com.soundlab.repository.LibraryRepository;
+import com.soundlab.repository.PlaylistRepository;
 import com.soundlab.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class Initializer {
 
     private final UserRepository userRepository;
     private final LibraryRepository libraryRepository;
+    private final PlaylistRepository playlistRepository;
 
     private final PasswordEncoder encoder;
 
@@ -52,6 +55,11 @@ public class Initializer {
         u.get(1).setLibrary(l.get(1));
         this.userRepository.save(u.get(0));
         this.userRepository.save(u.get(1));
+
+        var p = playlistRepository.saveAll(List.of(
+                Playlist.builder().id(1L).name("playy").genre("boh").favourite(true).songsNumber(0).library(l.get(0)).build()
+        ));
+
 
         logger.info("Done initialization!");
     }
