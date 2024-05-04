@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -24,7 +24,7 @@ public class Library extends AuditModel{
     private Integer playlistsNumber;
 
     @OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Playlist> playlists;
+    private List<Playlist> playlists;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "email")

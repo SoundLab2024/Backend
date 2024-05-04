@@ -7,7 +7,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -38,9 +38,9 @@ public class Artist extends AuditModel{
     private String nationality;
 
     @OneToMany (mappedBy = "artist", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Album> albums;
+    private List<Album> albums;
 
     @ManyToMany(mappedBy = "artists", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Song> songs;
+    private List<Song> songs;
 
 }

@@ -47,7 +47,7 @@ public class Initializer {
 
         List<Library> l = new ArrayList<>();
         l = libraryRepository.saveAll(List.of(
-                Library.builder().user(u.get(0)).playlistsNumber(0).id(1L).build(),
+                Library.builder().user(u.get(0)).playlistsNumber(1).id(1L).build(),
                 Library.builder().user(u.get(1)).playlistsNumber(0).id(2L).build()
         ));
 

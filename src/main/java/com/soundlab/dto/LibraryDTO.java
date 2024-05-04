@@ -5,6 +5,7 @@ import com.soundlab.domain.Playlist;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 @Data
 public class LibraryDTO implements Serializable {
@@ -24,7 +25,7 @@ public class LibraryDTO implements Serializable {
     /**
      * List of playlists in the lib
      */
-    //@JsonProperty("playlists")
-    //private Set<PlaylistDTO> playlists;
+    @JsonProperty("playlists")
+    private List<PlaylistDTO> playlists;
 
 }

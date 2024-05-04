@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -49,7 +49,7 @@ public class Song extends AuditModel{
     private Album album;
 
     @OneToMany(mappedBy = "song", fetch = FetchType.LAZY)
-    private Set<Listening> listenings;
+    private List<Listening> listenings;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "collabs",
@@ -57,13 +57,13 @@ public class Song extends AuditModel{
             inverseJoinColumns = @JoinColumn(name = "artist_id")
     )
     @NotNull(message = "I riferimenti agli artisti sono richiesti")
-    private Set<Artist> artists;
+    private List<Artist> artists;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "adds",
             joinColumns = @JoinColumn(name = "song_id"),
             inverseJoinColumns = @JoinColumn(name = "playlist_id")
     )
-    private Set<Playlist> playlists;
+    private List<Playlist> playlists;
 
 }

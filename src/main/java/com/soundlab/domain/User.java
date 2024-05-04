@@ -10,7 +10,6 @@ import jakarta.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -71,7 +70,7 @@ public class User extends AuditModel implements UserDetails {
   private boolean active;
 
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-  private Set<Listening> listenings;
+  private List<Listening> listenings;
 
   @OneToOne
   @JoinColumn(name = "library_id")

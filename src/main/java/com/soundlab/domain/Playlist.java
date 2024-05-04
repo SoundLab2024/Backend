@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -43,5 +43,5 @@ public class Playlist extends AuditModel{
     private Library library;
 
     @ManyToMany(mappedBy = "playlists", fetch = FetchType.LAZY)
-    private Set<Song> songs;
+    private List<Song> songs;
 }
