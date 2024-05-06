@@ -42,6 +42,6 @@ public class Playlist extends AuditModel{
     @NotNull(message = "Il riferimento alla libreria è richiesto")
     private Library library;
 
-    @ManyToMany(mappedBy = "playlists", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "playlists", fetch = FetchType.EAGER)
     private List<Song> songs;
 }

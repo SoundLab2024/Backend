@@ -22,7 +22,7 @@ public class LibraryService implements BaseService<Library, LibraryDTO, Long, Pa
 
     private final LibraryRepository repository;
     private final LibraryMapper mapper;
-    private final Logger logger = LoggerFactory.getLogger(LibraryService.class);
+    //private final Logger logger = LoggerFactory.getLogger(LibraryService.class);
 
     @Override
     public LibraryDTO getSingle(Long id) {

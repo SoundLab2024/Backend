@@ -1,13 +1,10 @@
 package com.soundlab;
 
-import com.soundlab.domain.Library;
-import com.soundlab.domain.Playlist;
-import com.soundlab.domain.User;
+import com.soundlab.domain.*;
 import com.soundlab.domain.properties.Gender;
 import com.soundlab.domain.properties.Role;
-import com.soundlab.repository.LibraryRepository;
-import com.soundlab.repository.PlaylistRepository;
-import com.soundlab.repository.UserRepository;
+import com.soundlab.domain.properties.SongType;
+import com.soundlab.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +27,8 @@ public class Initializer {
     private final UserRepository userRepository;
     private final LibraryRepository libraryRepository;
     private final PlaylistRepository playlistRepository;
+    private final SongRepository songRepository;
+    private final ArtistRepository artistRepository;
 
     private final PasswordEncoder encoder;
 
@@ -56,9 +55,27 @@ public class Initializer {
         this.userRepository.save(u.get(0));
         this.userRepository.save(u.get(1));
 
-        var p = playlistRepository.saveAll(List.of(
+        List<Playlist> p = new ArrayList<>();
+        p = playlistRepository.saveAll(List.of(
                 Playlist.builder().id(1L).name("playy").genre("boh").favourite(true).songsNumber(0).library(l.get(0)).build()
         ));
+
+        List<Artist> a = new ArrayList<>();
+        a = artistRepository.saveAll(List.of(
+                Artist.builder().id(1L).name("Alberto Selly").nationality("Napoli").build()
+        ));
+
+        List<Song> s = new ArrayList<>();
+        s = songRepository.saveAll(List.of(
+                Song.builder().id(1L).title("O ball ro cavall").genre("Swag").type(SongType.ORIGINAL).year(2012).artistsNumber(1).artists(a).build()
+        ));
+
+        // aggiungo la canzone creata prima nella playlist creata prima
+        p.get(0).setSongs(s);
+        p.get(0).setSongsNumber(1);
+        this.playlistRepository.save(p.get(0));
+        s.get(0).setPlaylists(p);
+        this.songRepository.save(s.get(0));
 
 
         logger.info("Done initialization!");
