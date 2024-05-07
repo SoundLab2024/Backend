@@ -58,11 +58,8 @@ public class Song extends AuditModel{
     )
     private List<Artist> artists;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "adds",
-            joinColumns = @JoinColumn(name = "song_id"),
-            inverseJoinColumns = @JoinColumn(name = "playlist_id")
-    )
+
+    @ManyToMany(mappedBy = "songs", fetch = FetchType.LAZY)
     private List<Playlist> playlists;
 
 }

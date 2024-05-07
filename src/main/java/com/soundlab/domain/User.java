@@ -69,10 +69,10 @@ public class User extends AuditModel implements UserDetails {
   @Column(name = "active", columnDefinition = "boolean default true")
   private boolean active;
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<Listening> listenings;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "library_id")
   private Library library;
 

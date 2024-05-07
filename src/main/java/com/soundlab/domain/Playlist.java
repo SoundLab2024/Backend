@@ -42,6 +42,10 @@ public class Playlist extends AuditModel{
     @NotNull(message = "Il riferimento alla libreria è richiesto")
     private Library library;
 
-    @ManyToMany(mappedBy = "playlists", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "adds",
+            joinColumns = @JoinColumn(name = "playlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "song_id")
+    )
     private List<Song> songs;
 }

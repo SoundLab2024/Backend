@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -23,10 +24,11 @@ public class Listening extends AuditModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Utilizziamo LocalDateTime per la gestione degli orari non Date
     @NotNull(message = "la data è richiesta")
     @Column(name = "data")
-    @DateTimeFormat(pattern = "dd-MM-YYYY HH:MM")
-    private Date data;
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime data;
 
     @NotNull(message = "La fascia oraria è richiesta")
     @Enumerated(EnumType.STRING)

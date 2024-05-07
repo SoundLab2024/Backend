@@ -28,6 +28,7 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
      * Metodo che ritorna tutte le canzoni di una playlist
      */
     @Override
+    @Transactional
     public PlaylistDTO getSingle(Long id) {
 
         // Cerco la playlist tramite l'id fornito -> Cerco le canzoni associate tramite adds -> Mappo e ritorno la song list

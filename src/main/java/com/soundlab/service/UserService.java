@@ -4,6 +4,7 @@ import com.soundlab.domain.Library;
 import com.soundlab.domain.User;
 import com.soundlab.dto.UserDTO;
 import com.soundlab.repository.LibraryRepository;
+import com.soundlab.repository.ListeningRepository;
 import com.soundlab.repository.UserRepository;
 import com.soundlab.security.JWTService;
 import com.soundlab.service.base.BaseService;
@@ -16,6 +17,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ public class UserService implements BaseService<User, UserDTO, String, Payload> 
 
     private final UserRepository repository;
     private final LibraryRepository libraryRepo;
+    private final ListeningRepository listeningRepo;
     private final UserMapper mapper;
     private final JWTService jwtService;
 
@@ -90,8 +93,10 @@ public class UserService implements BaseService<User, UserDTO, String, Payload> 
     }
 
     @Override
+    @Transactional
     public Payload delete(String id) {
-        if (this.repository.findById(id).isEmpty()) {
+        var u = this.repository.findById(id);
+        if (u.isEmpty()) {
             return Payload
                     .builder()
                     .statusCode(HttpStatus.NOT_FOUND.value())

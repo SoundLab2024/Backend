@@ -4,8 +4,11 @@ import com.soundlab.domain.*;
 import com.soundlab.domain.properties.Gender;
 import com.soundlab.domain.properties.Role;
 import com.soundlab.domain.properties.SongType;
+import com.soundlab.domain.properties.TimeSlot;
 import com.soundlab.repository.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,7 @@ public class Initializer {
     private final PlaylistRepository playlistRepository;
     private final SongRepository songRepository;
     private final ArtistRepository artistRepository;
+    private final ListeningRepository listeningRepository;
 
     private final PasswordEncoder encoder;
 
@@ -40,7 +44,7 @@ public class Initializer {
         List<User> u = new ArrayList<>();
         u = userRepository.saveAll(List.of(
                 // Used for swagger ui
-                User.builder().username("user").email("string").password(encoder.encode("string")).active(true).role(Role.ADMIN).gender(Gender.Male).build(),
+                User.builder().username("user").email("string@string.com").password(encoder.encode("string")).active(true).role(Role.ADMIN).gender(Gender.Male).build(),
                 User.builder().username("aaa").email("aaa@mail.com").password(encoder.encode("aaa")).active(true).role(Role.USER).gender(Gender.Male).build()
         ));
 
@@ -76,6 +80,15 @@ public class Initializer {
         this.playlistRepository.save(p.get(0));
         s.get(0).setPlaylists(p);
         this.songRepository.save(s.get(0));
+
+        List<Listening> h = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        LocalDateTime time1 = LocalDateTime.parse("05-05-2000 21:30:05", formatter);
+        LocalDateTime time2 = LocalDateTime.parse("10-10-2010 09:30:05", formatter);
+        h = listeningRepository.saveAll(List.of(
+           Listening.builder().id(1L).data(time1).timeSlot(TimeSlot.Afternoon).user(u.get(0)).song(s.get(0)).build(),
+           Listening.builder().id(2L).data(time2).timeSlot(TimeSlot.Morning).user(u.get(0)).song(s.get(0)).build()
+        ));
 
 
         logger.info("Done initialization!");
