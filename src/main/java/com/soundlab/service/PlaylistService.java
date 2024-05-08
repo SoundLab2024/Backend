@@ -1,15 +1,20 @@
 package com.soundlab.service;
 
+import com.soundlab.domain.Library;
 import com.soundlab.domain.Playlist;
 import com.soundlab.domain.Song;
 import com.soundlab.dto.PlaylistDTO;
+import com.soundlab.dto.records.InsertPlaylistDTO;
 import com.soundlab.dto.SongDTO;
+import com.soundlab.repository.LibraryRepository;
 import com.soundlab.repository.PlaylistRepository;
 import com.soundlab.service.base.BaseService;
+import com.soundlab.utils.exceptions.LibraryNotFoundException;
 import com.soundlab.utils.mappers.PlaylistMapper;
 import com.soundlab.utils.mappers.SongMapper;
 import com.soundlab.utils.response.Payload;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +24,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long, Payload> {
-    private final PlaylistRepository repository;
+    private final PlaylistRepository playlistRepo;
+    private final LibraryRepository libraryRepo;
 
     private final PlaylistMapper playlistMapper;
     private final SongMapper songMapper;
@@ -32,7 +38,7 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
     public PlaylistDTO getSingle(Long id) {
 
         // Cerco la playlist tramite l'id fornito -> Cerco le canzoni associate tramite adds -> Mappo e ritorno la song list
-        var p = this.repository.findById(id).orElseThrow(()-> new RuntimeException("Playlist non trovata"));
+        var p = this.playlistRepo.findById(id).orElseThrow(()-> new RuntimeException("Playlist non trovata"));
         List<Song> songs = p.getSongs();
 
         List<SongDTO> songDTOs = songs.stream()
@@ -50,9 +56,31 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
         return null;
     }
 
-    @Override
-    public Payload insert(Playlist playlist) {
-        return null;
+    public Payload insertPlaylist(InsertPlaylistDTO pl) {
+
+        // Cerco la libreria dell'utente nel db per aumentare di 1 il count delle playlist
+        Library l = this.libraryRepo.findById(pl.libId()).orElseThrow(()-> new LibraryNotFoundException("Libreria non trovata"));
+        int oldNumber = l.getPlaylistsNumber();
+        l.setPlaylistsNumber(oldNumber + 1);
+        //la salvo di nuovo
+        this.libraryRepo.save(l);
+
+        // Buildo la playlist e la salvo
+        var p = Playlist
+                .builder()
+                .name(pl.name())
+                .genre(pl.genre())
+                .favourite(false)
+                .library(l)
+                .songsNumber(0)
+                .build();
+        p = this.playlistRepo.save(p);
+
+        return Payload
+                .builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("Playlist inserita correttamente")
+                .build();
     }
 
     @Override
@@ -64,4 +92,10 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
     public Payload delete(Long aLong) {
         return null;
     }
+
+    @Override
+    public Payload insert(Playlist playlist) {
+        return null;
+    }
+
 }

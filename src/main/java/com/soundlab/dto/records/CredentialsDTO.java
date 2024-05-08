@@ -1,4 +1,4 @@
-package com.soundlab.dto;
+package com.soundlab.dto.records;
 
 import lombok.Builder;
 

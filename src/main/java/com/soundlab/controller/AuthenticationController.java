@@ -1,7 +1,7 @@
 package com.soundlab.controller;
 
-import com.soundlab.dto.CredentialsDTO;
-import com.soundlab.dto.RegistrationDTO;
+import com.soundlab.dto.records.CredentialsDTO;
+import com.soundlab.dto.records.RegistrationDTO;
 import com.soundlab.service.AuthenticationService;
 import com.soundlab.utils.response.Payload;
 import com.soundlab.utils.response.UserPayload;
