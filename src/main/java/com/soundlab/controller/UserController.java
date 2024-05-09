@@ -89,4 +89,5 @@ public class UserController {
   public Payload delete(@Email @PathVariable("id") String id) {
     return this.service.delete(id);
   }
+
 }

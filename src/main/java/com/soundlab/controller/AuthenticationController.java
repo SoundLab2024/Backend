@@ -53,8 +53,8 @@ public class AuthenticationController {
    * @param dto Structure representing the user
    * @return Status of the operation in a form of payload
    */
-  @PostMapping("confirm")
-  public Payload confirm(@Valid @RequestBody RegistrationDTO dto) {
-    return this.service.confirm(dto);
+  @PostMapping("changepw")
+  public Payload changePw(@Valid @RequestBody RegistrationDTO dto) {
+    return this.service.changePw(dto);
   }
 }

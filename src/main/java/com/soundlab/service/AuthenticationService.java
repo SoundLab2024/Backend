@@ -31,7 +31,10 @@ public class AuthenticationService {
 
     public UserPayload register(CredentialsDTO dto) {
         if (this.repository.findById(dto.email()).isPresent()) {
-
+            return UserPayload
+                    .builder()
+                    .token("Utente con email già esistente")
+                    .build();
         }
 
         var s = User
@@ -90,7 +93,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public Payload confirm(RegistrationDTO dto) {
+    public Payload changePw(RegistrationDTO dto) {
         if (this.repository.findById(dto.email()).isEmpty()) {
             return Payload
                     .builder()

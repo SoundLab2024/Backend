@@ -27,4 +27,10 @@ public class PlaylistController {
     @PostMapping("createPl")
     public Payload insert(@Valid @RequestBody InsertPlaylistDTO dto){ return this.service.insertPlaylist(dto); }
 
+    @DeleteMapping("{id}")
+    public Payload delete(@PathVariable("id") Long id) {return this.service.delete(id); }
+
+    @PostMapping("renamePl")
+    public Payload renamePl(@RequestBody InsertPlaylistDTO dto){ return this.service.renamePl(dto); }
+
 }

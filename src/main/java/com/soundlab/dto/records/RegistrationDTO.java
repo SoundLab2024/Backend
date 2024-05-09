@@ -10,6 +10,4 @@ import lombok.Builder;
  * @param newPassword the new requested password of the client (user)
  */
 @Builder
-public record RegistrationDTO(String email, String oldPassword, String newPassword) {
-
-}
+public record RegistrationDTO(String email, String oldPassword, String newPassword) { }

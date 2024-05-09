@@ -10,6 +10,7 @@ import com.soundlab.repository.LibraryRepository;
 import com.soundlab.repository.PlaylistRepository;
 import com.soundlab.service.base.BaseService;
 import com.soundlab.utils.exceptions.LibraryNotFoundException;
+import com.soundlab.utils.exceptions.StorageException;
 import com.soundlab.utils.mappers.PlaylistMapper;
 import com.soundlab.utils.mappers.SongMapper;
 import com.soundlab.utils.response.Payload;
@@ -51,11 +52,6 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
         return playlistDTO;
     }
 
-    @Override
-    public List<PlaylistDTO> getAll() {
-        return null;
-    }
-
     public Payload insertPlaylist(InsertPlaylistDTO pl) {
 
         // Cerco la libreria dell'utente nel db per aumentare di 1 il count delle playlist
@@ -84,12 +80,46 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
     }
 
     @Override
-    public Payload update(Playlist playlist) {
+    public Payload delete(Long id) {
+        var p = this.playlistRepo.findById(id);
+        if (p.isEmpty()) {
+            return Payload
+                    .builder()
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .msg("Playlist richiesta non esiste")
+                    .build();
+        }
+
+        this.playlistRepo.deleteById(id);
+
+        return Payload
+                .builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("Playlist eliminata correttamente")
+                .build();
+    }
+
+    public Payload renamePl(InsertPlaylistDTO dto){
+        // UTILIZZO LA STESSA VARIABILE PER COMODITA' MA SI INTENDE L'ID DELLA PLAYLIST DA RINOMINARE
+        var p = this.playlistRepo.findById(dto.libId()).orElseThrow(()-> new StorageException("Playlist non trovata."));
+        p.setName(dto.name());
+        p.setGenre(dto.genre());
+        this.playlistRepo.save(p);
+
+        return Payload
+                .builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("Playlist modificata con successo")
+                .build();
+    }
+
+    @Override
+    public List<PlaylistDTO> getAll() {
         return null;
     }
 
     @Override
-    public Payload delete(Long aLong) {
+    public Payload update(Playlist playlist) {
         return null;
     }
 
