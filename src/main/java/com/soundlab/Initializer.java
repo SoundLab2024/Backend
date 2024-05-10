@@ -64,14 +64,20 @@ public class Initializer {
                 Playlist.builder().id(1L).name("playy").genre("boh").favourite(true).songsNumber(0).library(l.get(0)).build()
         ));
 
+        // Un macello di liste....
         List<Artist> a = new ArrayList<>();
         a = artistRepository.saveAll(List.of(
                 Artist.builder().id(1L).name("Alberto Selly").nationality("Napoli").build()
         ));
+        List<Artist> ar = new ArrayList<>();
+        ar = artistRepository.saveAll(List.of(
+                Artist.builder().id(2L).name("Los del Río").nationality("Nazione").build()
+        ));
 
         List<Song> s = new ArrayList<>();
         s = songRepository.saveAll(List.of(
-                Song.builder().id(1L).title("O ball ro cavall").genre("Swag").type(SongType.ORIGINAL).year(2012).artistsNumber(1).artists(a).build()
+                Song.builder().id(1L).title("O ball ro cavall").genre("Swag").type(SongType.ORIGINAL).year(2012).artistsNumber(1).artists(a).build(),
+                Song.builder().id(2L).title("Macarena").genre("GoogleDicePop").type(SongType.ORIGINAL).year(1993).artistsNumber(1).artists(ar).build()
         ));
 
         // aggiungo la canzone creata prima nella playlist creata prima
@@ -81,13 +87,15 @@ public class Initializer {
         s.get(0).setPlaylists(p);
         this.songRepository.save(s.get(0));
 
+        // inserisco degli ascolti
         List<Listening> h = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         LocalDateTime time1 = LocalDateTime.parse("05-05-2000 21:30:05", formatter);
         LocalDateTime time2 = LocalDateTime.parse("10-10-2010 09:30:05", formatter);
         h = listeningRepository.saveAll(List.of(
            Listening.builder().id(1L).data(time1).timeSlot(TimeSlot.Afternoon).user(u.get(0)).song(s.get(0)).build(),
-           Listening.builder().id(2L).data(time2).timeSlot(TimeSlot.Morning).user(u.get(0)).song(s.get(0)).build()
+           Listening.builder().id(2L).data(time2).timeSlot(TimeSlot.Morning).user(u.get(0)).song(s.get(0)).build(),
+           Listening.builder().id(3L).data(time1).timeSlot(TimeSlot.Afternoon).user(u.get(0)).song(s.get(1)).build()
         ));
 
 
