@@ -75,7 +75,7 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
         return Payload
                 .builder()
                 .statusCode(HttpStatus.OK.value())
-                .msg("Playlist inserita correttamente")
+                .msg(String.valueOf(p.getId()))
                 .build();
     }
 
