@@ -18,6 +18,18 @@ public class PlaylistController {
     private final PlaylistService service;
 
     /**
+     * Rimuovo una canzone da una playlist
+     */
+    @DeleteMapping("delFrPl")
+    public Payload removeSong(@RequestParam Long plId, @RequestParam Long soId) { return this.service.removeSong(plId, soId); }
+
+    /**
+    * Inserisco una canzone in una playlist
+    */
+    @PostMapping("addToPl")
+    public Payload insertSong(@RequestParam Long plId, @RequestParam Long soId){ return this.service.insertSong(plId, soId); }
+
+    /**
      *  Retrieve a playlist from his Id
      */
     @GetMapping("{id}")

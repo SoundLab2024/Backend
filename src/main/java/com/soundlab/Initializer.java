@@ -61,7 +61,8 @@ public class Initializer {
 
         List<Playlist> p = new ArrayList<>();
         p = playlistRepository.saveAll(List.of(
-                Playlist.builder().id(1L).name("playy").genre("boh").favourite(true).songsNumber(0).library(l.get(0)).build()
+                Playlist.builder().id(1L).name("playy").genre("boh").favourite(true).songsNumber(0).library(l.get(0)).build(),
+                Playlist.builder().id(2L).name("sonounapl").genre("wow").favourite(false).songsNumber(0).library(l.get(0)).build()
         ));
 
         // Un macello di liste....
@@ -82,7 +83,7 @@ public class Initializer {
 
         // aggiungo la canzone creata prima nella playlist creata prima
         p.get(0).setSongs(s);
-        p.get(0).setSongsNumber(1);
+        p.get(0).setSongsNumber(2);
         this.playlistRepository.save(p.get(0));
         s.get(0).setPlaylists(p);
         this.songRepository.save(s.get(0));

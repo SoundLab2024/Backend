@@ -8,6 +8,7 @@ import com.soundlab.dto.records.InsertPlaylistDTO;
 import com.soundlab.dto.SongDTO;
 import com.soundlab.repository.LibraryRepository;
 import com.soundlab.repository.PlaylistRepository;
+import com.soundlab.repository.SongRepository;
 import com.soundlab.service.base.BaseService;
 import com.soundlab.utils.exceptions.LibraryNotFoundException;
 import com.soundlab.utils.exceptions.StorageException;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +29,74 @@ import java.util.stream.Collectors;
 public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long, Payload> {
     private final PlaylistRepository playlistRepo;
     private final LibraryRepository libraryRepo;
+    private final SongRepository songRepository;
 
     private final PlaylistMapper playlistMapper;
     private final SongMapper songMapper;
+
+
+    @Transactional
+    public Payload removeSong(Long idPlaylist, Long idSong){
+
+        // trovo la playlist a cui devo aggiungere la canzone
+        var p = playlistRepo.findById(idPlaylist).orElseThrow(()-> new StorageException("Playlist non trovata"));
+
+        // trovo la canzone da aggiungere
+        var s = songRepository.findById(idSong).orElseThrow(()-> new StorageException("Canzone non trovata"));
+
+        if(!p.getSongs().contains(s)){
+            return Payload
+                    .builder()
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .msg("Canzone non presente nella playlist")
+                    .build();
+        }
+
+        // Rimuovo la canzone da adds e quindi dalla playlist
+        p.getSongs().remove(s);
+        p.setSongsNumber(p.getSongs().size());
+        playlistRepo.save(p);
+
+        s.getPlaylists().remove(p);
+        songRepository.save(s);
+
+        return Payload
+                .builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("Canzone rimossa con successo")
+                .build();
+    }
+
+    @Transactional
+    public Payload insertSong(Long idPlaylist, Long idSong){
+
+        // trovo la playlist a cui devo aggiungere la canzone
+        var p = playlistRepo.findById(idPlaylist).orElseThrow(()-> new StorageException("Playlist non trovata"));
+
+        // trovo la canzone da aggiungere
+        var s = songRepository.findById(idSong).orElseThrow(()-> new StorageException("Canzone non trovata"));
+
+        if(p.getSongs().contains(s)){
+            return Payload
+                    .builder()
+                    .statusCode(HttpStatus.CONFLICT.value())
+                    .msg("Canzone già presente nella playlist")
+                    .build();
+        }
+
+        p.getSongs().add(s);
+        p.setSongsNumber(p.getSongs().size());
+        playlistRepo.save(p);
+
+        s.getPlaylists().add(p);
+        songRepository.save(s);
+
+        return Payload
+                .builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("Canzone aggiunta con successo")
+                .build();
+    }
 
     /**
      * Metodo che ritorna tutte le canzoni di una playlist
