@@ -4,6 +4,7 @@ import com.soundlab.domain.Library;
 import com.soundlab.domain.Playlist;
 import com.soundlab.domain.Song;
 import com.soundlab.dto.PlaylistDTO;
+import com.soundlab.dto.records.AddRemoveSongDTO;
 import com.soundlab.dto.records.InsertPlaylistDTO;
 import com.soundlab.dto.SongDTO;
 import com.soundlab.repository.LibraryRepository;
@@ -36,13 +37,13 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
 
 
     @Transactional
-    public Payload removeSong(Long idPlaylist, Long idSong){
+    public Payload removeSong(AddRemoveSongDTO dto){
 
         // trovo la playlist a cui devo aggiungere la canzone
-        var p = playlistRepo.findById(idPlaylist).orElseThrow(()-> new StorageException("Playlist non trovata"));
+        var p = playlistRepo.findById(dto.idPlaylist()).orElseThrow(()-> new StorageException("Playlist non trovata"));
 
         // trovo la canzone da aggiungere
-        var s = songRepository.findById(idSong).orElseThrow(()-> new StorageException("Canzone non trovata"));
+        var s = songRepository.findById(dto.idSong()).orElseThrow(()-> new StorageException("Canzone non trovata"));
 
         if(!p.getSongs().contains(s)){
             return Payload
@@ -68,13 +69,13 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
     }
 
     @Transactional
-    public Payload insertSong(Long idPlaylist, Long idSong){
+    public Payload insertSong(AddRemoveSongDTO dto){
 
         // trovo la playlist a cui devo aggiungere la canzone
-        var p = playlistRepo.findById(idPlaylist).orElseThrow(()-> new StorageException("Playlist non trovata"));
+        var p = playlistRepo.findById(dto.idPlaylist()).orElseThrow(()-> new StorageException("Playlist non trovata"));
 
         // trovo la canzone da aggiungere
-        var s = songRepository.findById(idSong).orElseThrow(()-> new StorageException("Canzone non trovata"));
+        var s = songRepository.findById(dto.idSong()).orElseThrow(()-> new StorageException("Canzone non trovata"));
 
         if(p.getSongs().contains(s)){
             return Payload

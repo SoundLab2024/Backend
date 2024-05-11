@@ -2,6 +2,7 @@ package com.soundlab.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.soundlab.dto.PlaylistDTO;
+import com.soundlab.dto.records.AddRemoveSongDTO;
 import com.soundlab.dto.records.InsertPlaylistDTO;
 import com.soundlab.dto.Views;
 import com.soundlab.service.PlaylistService;
@@ -21,13 +22,13 @@ public class PlaylistController {
      * Rimuovo una canzone da una playlist
      */
     @DeleteMapping("delFrPl")
-    public Payload removeSong(@RequestParam Long plId, @RequestParam Long soId) { return this.service.removeSong(plId, soId); }
+    public Payload removeSong(@RequestBody AddRemoveSongDTO dto) { return this.service.removeSong(dto); }
 
     /**
     * Inserisco una canzone in una playlist
     */
     @PostMapping("addToPl")
-    public Payload insertSong(@RequestParam Long plId, @RequestParam Long soId){ return this.service.insertSong(plId, soId); }
+    public Payload insertSong(@RequestBody AddRemoveSongDTO dto){ return this.service.insertSong(dto); }
 
     /**
      *  Retrieve a playlist from his Id
