@@ -1,12 +1,11 @@
 package com.soundlab.controller;
 
 import com.soundlab.dto.ListeningDTO;
+import com.soundlab.dto.records.AddRemoveListeningDTO;
 import com.soundlab.service.ListeningService;
+import com.soundlab.utils.response.Payload;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,7 +16,16 @@ public class ListeningController {
 
     private final ListeningService serviceLis;
 
-    @GetMapping("{id}")
+    @GetMapping("recently/{id}")
     public List<ListeningDTO> recentListened(@PathVariable("id") String id){ return this.serviceLis.recentListened(id); }
+
+    @GetMapping("all/{id}")
+    public List<ListeningDTO> allUserListened(@PathVariable("id") String id) { return this.serviceLis.allUserListened(id); }
+
+    @GetMapping("song/{prefix}")
+    public List<ListeningDTO> allSongListened(@PathVariable("prefix") String prefix) { return this.serviceLis.allSongListened(prefix); }
+
+    @PostMapping("new")
+    public Payload insertListening(@RequestBody AddRemoveListeningDTO dto) { return this.serviceLis.insertListening(dto); }
 
 }

@@ -14,4 +14,7 @@ public interface SongRepository extends JpaRepository<Song, Long> {
     @Query("SELECT s FROM Song s WHERE LOWER(s.title) LIKE CONCAT(LOWER(:prefix), '%')")
     List<Song> findByTitleStartingWith(@Param("prefix") String prefix);
 
+    @Query("SELECT s FROM Song s WHERE s.title = :prefix")
+    Song findByExactTitle(@Param("prefix") String prefix);
+
 }
