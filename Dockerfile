@@ -4,7 +4,7 @@ FROM gradle:8.4.0-jdk17-alpine as buildstage
 WORKDIR /buildstage
 COPY build.gradle.kts settings.gradle.kts ./
 COPY ./src ./src
-RUN gradle build --no-daemon
+RUN gradle build -x test --no-daemon
 
 # Optimization Stage
 FROM eclipse-temurin:17-jre as optimizer
@@ -21,5 +21,4 @@ COPY --from=optimizer /optimizer/dependencies/ ./
 COPY --from=optimizer /optimizer/spring-boot-loader/ ./
 COPY --from=optimizer /optimizer/snapshot-dependencies/ ./
 COPY --from=optimizer /optimizer/application/ ./
-# If a specific docker options are setted into application properties enable it: "-Dspring.profiles.active=docker"
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "org.springframework.boot.loader.launch.JarLauncher"]
