@@ -47,7 +47,7 @@ application:
     jwt:
       secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
       expiration: 86400000 # a day (604800000 7 days)
-  description: API for the management of users, classrooms and their properties of Ratatouille framework
+  description: API for the management of the backend application.
   version: 1.0.0
 
 springdoc:

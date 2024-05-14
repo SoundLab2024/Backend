@@ -36,6 +36,27 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
     private final SongMapper songMapper;
 
 
+
+    public Payload favPlaylist(Long id){
+
+        var p = this.playlistRepo.findById(id).orElseThrow(()-> new StorageException("Playlist non trovata"));
+        boolean fav = p.isFavourite();
+
+        if(fav){
+            p.setFavourite(false);
+        }else{
+            p.setFavourite(true);
+        }
+
+        playlistRepo.save(p);
+
+        return Payload
+                .builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("Toggle preferita con successo")
+                .build();
+    }
+
     @Transactional
     public Payload removeSong(AddRemoveSongDTO dto){
 

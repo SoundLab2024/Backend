@@ -41,6 +41,7 @@ public class Initializer {
     public void init() {
         logger.info("Populating sample users and libraries");
 
+        // Creo degli Utenti
         List<User> u = new ArrayList<>();
         u = userRepository.saveAll(List.of(
                 // Used for swagger ui
@@ -48,24 +49,27 @@ public class Initializer {
                 User.builder().username("aaa").email("aaa@mail.com").password(encoder.encode("aaa")).active(true).role(Role.USER).gender(Gender.Male).build()
         ));
 
+        //Creo delle Librerie per gli utenti
         List<Library> l = new ArrayList<>();
         l = libraryRepository.saveAll(List.of(
                 Library.builder().user(u.get(0)).playlistsNumber(1).id(1L).build(),
                 Library.builder().user(u.get(1)).playlistsNumber(0).id(2L).build()
         ));
 
+        //Gli associo le Librerie create e salvo
         u.get(0).setLibrary(l.get(0));
         u.get(1).setLibrary(l.get(1));
         this.userRepository.save(u.get(0));
         this.userRepository.save(u.get(1));
 
+        // Creo delle Playlist che associo alle librerie
         List<Playlist> p = new ArrayList<>();
         p = playlistRepository.saveAll(List.of(
                 Playlist.builder().id(1L).name("playy").genre("boh").favourite(true).songsNumber(0).library(l.get(0)).build(),
                 Playlist.builder().id(2L).name("sonounapl").genre("wow").favourite(false).songsNumber(0).library(l.get(0)).build()
         ));
 
-        // Un macello di liste....
+        // Creo degli artisti
         List<Artist> a = new ArrayList<>();
         a = artistRepository.saveAll(List.of(
                 Artist.builder().id(1L).name("Alberto Selly").nationality("Napoli").build()
@@ -75,20 +79,21 @@ public class Initializer {
                 Artist.builder().id(2L).name("Los del Río").nationality("Nazione").build()
         ));
 
+        // Creo delle canzoni e gli associo almeno un Artista
         List<Song> s = new ArrayList<>();
         s = songRepository.saveAll(List.of(
                 Song.builder().id(1L).title("O ball ro cavall").genre("Swag").type(SongType.ORIGINAL).year(2012).artistsNumber(1).artists(a).build(),
                 Song.builder().id(2L).title("Macarena").genre("GoogleDicePop").type(SongType.ORIGINAL).year(1993).artistsNumber(1).artists(ar).build()
         ));
 
-        // aggiungo la canzone creata prima nella playlist creata prima
+        // Aggiungo le canzoni create prima nelle playlist
         p.get(0).setSongs(s);
         p.get(0).setSongsNumber(2);
         this.playlistRepository.save(p.get(0));
         s.get(0).setPlaylists(p);
         this.songRepository.save(s.get(0));
 
-        // inserisco degli ascolti
+        // Aggiungo degli ascolti finti
         List<Listening> h = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         LocalDateTime time1 = LocalDateTime.parse("05-05-2000 21:30:05", formatter);

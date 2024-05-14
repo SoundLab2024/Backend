@@ -19,6 +19,12 @@ public class PlaylistController {
     private final PlaylistService service;
 
     /**
+     * Setto una playlist preferita/non preferita
+     */
+    @PostMapping("toggleFav/{id}")
+    public Payload favPlaylist(@PathVariable("id") Long id){ return this.service.favPlaylist(id); }
+
+    /**
      * Rimuovo una canzone da una playlist
      */
     @DeleteMapping("delFrPl")
