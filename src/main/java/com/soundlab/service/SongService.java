@@ -24,6 +24,7 @@ public class SongService implements BaseService<Song, SongDTO, Long, Payload> {
 
         List<Song> songs = songRepository.findByTitleStartingWith(prefix);
         List<SongDTO> songDTOs = songs.stream()
+                .limit(5)
                 .map(song -> this.songMapper.toDTO(song))
                 .collect(Collectors.toList());
 

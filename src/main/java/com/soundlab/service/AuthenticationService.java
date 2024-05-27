@@ -19,6 +19,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -124,6 +126,39 @@ public class AuthenticationService {
                 .builder()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .msg("Impossibile completare la richiesta. I dati specificati non sono validi")
+                .build();
+    }
+
+    public Payload changeUsername(RegistrationDTO dto) {
+        /*
+         * Sto utilizzando lo stesso DTO, per new e old password si intende new e old username
+         */
+
+        Optional<User> u = this.repository.findById(dto.email());
+        if(u.isEmpty()){
+            return Payload
+                    .builder()
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .msg("Utente richiesto non esiste")
+                    .build();
+        }
+
+        if(dto.newPassword().equals(dto.oldPassword())){
+            return Payload
+                    .builder()
+                    .statusCode(HttpStatus.CONFLICT.value())
+                    .msg("Form non compilato correttamente")
+                    .build();
+        }
+
+        User user = u.get();
+        user.setUsername(dto.newPassword());
+        this.repository.save(user);
+
+        return Payload
+                .builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("Username modificato con successo")
                 .build();
     }
 }

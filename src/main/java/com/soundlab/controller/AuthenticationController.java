@@ -57,4 +57,7 @@ public class AuthenticationController {
   public Payload changePw(@Valid @RequestBody RegistrationDTO dto) {
     return this.service.changePw(dto);
   }
+
+  @PostMapping("changeusern")
+  public Payload changeUsername(@Valid @RequestBody RegistrationDTO dto) { return this.service.changeUsername(dto); }
 }
