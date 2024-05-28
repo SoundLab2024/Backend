@@ -18,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -129,6 +130,7 @@ public class AuthenticationService {
                 .build();
     }
 
+    @Transactional
     public Payload changeUsername(RegistrationDTO dto) {
         /*
          * Sto utilizzando lo stesso DTO, per new e old password si intende new e old username
@@ -161,4 +163,55 @@ public class AuthenticationService {
                 .msg("Username modificato con successo")
                 .build();
     }
+
+    @Transactional
+    public Payload changeEmail(RegistrationDTO dto) {
+        Optional<User> optU = this.repository.findById(dto.email());
+        if(optU.isEmpty()){
+            return Payload
+                    .builder()
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .msg("Utente richiesto non esiste")
+                    .build();
+        }
+        User u = optU.get();
+
+        Optional<Library> optL = this.libraryRepo.findById(u.getLibrary().getId());
+        if(optL.isEmpty()){
+            return Payload
+                    .builder()
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .msg("Libreria richiesta non esiste")
+                    .build();
+        }
+        Library l = optL.get();
+
+        // Crea un nuovo utente con la nuova email
+        var newUser = User
+                .builder()
+                .email(dto.newPassword())
+                .password(u.getPassword())
+                .username(u.getName())
+                .role(u.getRole())
+                .birth(u.getBirth())
+                .gender(u.getGender())
+                .active(true)
+                .build();
+        newUser = this.repository.save(newUser);
+
+        l.setUser(newUser);
+        u.setLibrary(null);
+
+        this.repository.deleteById(u.getEmail());
+
+        //newUser.setLibrary(l);
+        //this.repository.save(newUser);
+
+        return Payload
+                .builder()
+                .statusCode(HttpStatus.OK.value())
+                .msg("Email modificata con successo")
+                .build();
+    }
+
 }

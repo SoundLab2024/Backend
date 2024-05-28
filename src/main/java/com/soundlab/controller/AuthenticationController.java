@@ -60,4 +60,8 @@ public class AuthenticationController {
 
   @PostMapping("changeusern")
   public Payload changeUsername(@Valid @RequestBody RegistrationDTO dto) { return this.service.changeUsername(dto); }
+
+  @PostMapping("changemail")
+  public Payload changeEmail(@Valid @RequestBody RegistrationDTO dto) { return this.service.changeEmail(dto); }
+
 }
