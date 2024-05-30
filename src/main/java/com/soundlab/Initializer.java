@@ -83,7 +83,7 @@ public class Initializer {
         List<Song> s = new ArrayList<>();
         s = songRepository.saveAll(List.of(
                 Song.builder().id(1L).title("O ball ro cavall").genre("Swag").type(SongType.ORIGINAL).year(2012).artistsNumber(1).artists(a).build(),
-                Song.builder().id(2L).title("Macarena").genre("GoogleDicePop").type(SongType.ORIGINAL).year(1993).artistsNumber(1).artists(ar).build()
+                Song.builder().id(2L).title("Macarena").genre("Pop").type(SongType.ORIGINAL).year(1993).artistsNumber(1).artists(ar).build()
         ));
 
         // Aggiungo le canzoni create prima nelle playlist

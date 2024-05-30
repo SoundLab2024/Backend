@@ -1,8 +1,6 @@
 package com.soundlab.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.soundlab.dto.SongDTO;
-import com.soundlab.dto.Views;
 import com.soundlab.service.SongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,5 +19,8 @@ public class SongController {
 
     @GetMapping("search/{prefix}")
     public List<SongDTO> searchSongs(@PathVariable("prefix") String prefix) { return this.service.searchSongs(prefix); }
+
+    @GetMapping("search/genre/{prefix}")
+    public List<SongDTO> searchByGenre(@PathVariable("prefix") String prefix) { return this.service.searchByGenre(prefix); }
 
 }

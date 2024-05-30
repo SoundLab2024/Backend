@@ -23,12 +23,21 @@ public class SongService implements BaseService<Song, SongDTO, Long, Payload> {
     public List<SongDTO> searchSongs(String prefix){
 
         List<Song> songs = songRepository.findByTitleStartingWith(prefix);
-        List<SongDTO> songDTOs = songs.stream()
-                .limit(5)
-                .map(song -> this.songMapper.toDTO(song))
-                .collect(Collectors.toList());
 
-        return songDTOs;
+        return songs.stream()
+                .limit(5)
+                .map(this.songMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<SongDTO> searchByGenre(String prefix){
+
+        List<Song> songs = songRepository.findAllByGenre(prefix);
+
+        return songs.stream()
+                .limit(10)
+                .map(this.songMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

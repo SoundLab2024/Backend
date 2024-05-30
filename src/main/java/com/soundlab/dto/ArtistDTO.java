@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
-import java.sql.Date;
-
 @Data
 public class ArtistDTO {
 

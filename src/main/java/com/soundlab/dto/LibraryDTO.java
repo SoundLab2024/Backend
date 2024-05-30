@@ -2,12 +2,10 @@ package com.soundlab.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.soundlab.domain.Playlist;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 @Data
 public class LibraryDTO implements Serializable {
 

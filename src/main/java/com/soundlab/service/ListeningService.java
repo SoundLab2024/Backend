@@ -1,6 +1,5 @@
 package com.soundlab.service;
 
-import com.soundlab.domain.Library;
 import com.soundlab.domain.Listening;
 import com.soundlab.domain.properties.TimeSlot;
 import com.soundlab.dto.ListeningDTO;
@@ -18,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
