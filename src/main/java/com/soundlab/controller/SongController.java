@@ -23,4 +23,7 @@ public class SongController {
     @GetMapping("search/genre/{prefix}")
     public List<SongDTO> searchByGenre(@PathVariable("prefix") String prefix) { return this.service.searchByGenre(prefix); }
 
+    @GetMapping("recentlyFour/")
+    public List<SongDTO> searchLastFourListened() { return this.service.searchByLastListened(); }
+
 }

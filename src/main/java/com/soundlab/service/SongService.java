@@ -1,15 +1,19 @@
 package com.soundlab.service;
 
+import com.soundlab.domain.Listening;
 import com.soundlab.domain.Song;
 import com.soundlab.dto.SongDTO;
+import com.soundlab.repository.ListeningRepository;
 import com.soundlab.repository.SongRepository;
 import com.soundlab.service.base.BaseService;
 import com.soundlab.utils.mappers.SongMapper;
 import com.soundlab.utils.response.Payload;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,6 +21,7 @@ import java.util.stream.Collectors;
 public class SongService implements BaseService<Song, SongDTO, Long, Payload> {
 
     private final SongRepository songRepository;
+    private final ListeningRepository listeningRepository;
 
     private final SongMapper songMapper;
 
@@ -36,6 +41,17 @@ public class SongService implements BaseService<Song, SongDTO, Long, Payload> {
 
         return songs.stream()
                 .limit(10)
+                .map(this.songMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<SongDTO> searchByLastListened(){ // Questa funzione è m***a, ma veramente però.
+
+        List<Listening> lastFour = this.listeningRepository.findLastFour(PageRequest.of(0, 4));
+
+        return lastFour.stream()
+                .map(listening -> songRepository.findById(listening.getSong().getId()).orElse(null))
+                .filter(Objects::nonNull)
                 .map(this.songMapper::toDTO)
                 .collect(Collectors.toList());
     }
