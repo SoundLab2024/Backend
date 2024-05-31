@@ -35,6 +35,16 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
     private final SongMapper songMapper;
 
 
+    public List<PlaylistDTO> playlistSongPresent(Long idLib, Long idSn){
+
+        List<Playlist> playlists = this.playlistRepo.findPlaylistsByLib(idLib);
+
+        return playlists.stream()
+                .filter(playlist -> playlist.getSongs().stream().anyMatch(song -> song.getId().equals(idSn)))
+                .map(this.playlistMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
 
     public Payload favPlaylist(Long id){
 
@@ -131,7 +141,7 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
         List<Song> songs = p.getSongs();
 
         List<SongDTO> songDTOs = songs.stream()
-                .map(song -> this.songMapper.toDTO(song))
+                .map(this.songMapper::toDTO)
                 .collect(Collectors.toList());
 
         PlaylistDTO playlistDTO = this.playlistMapper.toDTO(p);

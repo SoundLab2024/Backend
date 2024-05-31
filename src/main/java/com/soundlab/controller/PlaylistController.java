@@ -11,12 +11,17 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/data/playlist/", produces = {"application/json"})
 public class PlaylistController {
 
     private final PlaylistService service;
+    @GetMapping("isAdded/{idLib}/{idSn}")
+    @JsonView(Views.LibraryPlaylists.class)
+    public List<PlaylistDTO> playlistsFromAddedSong(@PathVariable("idLib") Long idLib, @PathVariable("idSn") Long idSn) { return this.service.playlistSongPresent(idLib, idSn); }
 
     /**
      * Setto una playlist preferita/non preferita
