@@ -36,6 +36,7 @@ public class AuthenticationService {
         if (this.repository.findById(dto.email()).isPresent()) {
             return UserPayload
                     .builder()
+                    .statusCode(HttpStatus.CONFLICT.value())
                     .token("Utente con email già esistente")
                     .build();
         }
@@ -65,6 +66,7 @@ public class AuthenticationService {
 
         String token = jwtService.generateToken(s);
         return UserPayload.builder()
+                .statusCode(HttpStatus.OK.value())
                 .token(token)
                 .libraryId(s.getLibrary().getId())
                 .username(s.getName())
