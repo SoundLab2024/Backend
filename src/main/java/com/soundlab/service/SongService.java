@@ -12,8 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,7 +51,10 @@ public class SongService implements BaseService<Song, SongDTO, Long, Payload> {
 
         List<Listening> lastFour = this.listeningRepository.findLastFour(PageRequest.of(0, 4));
 
+        Set<Long> seenSongIds = new HashSet<>();
+
         return lastFour.stream()
+                .filter(listening -> seenSongIds.add(listening.getSong().getId()))
                 .map(listening -> songRepository.findById(listening.getSong().getId()).orElse(null))
                 .filter(Objects::nonNull)
                 .map(this.songMapper::toDTO)
