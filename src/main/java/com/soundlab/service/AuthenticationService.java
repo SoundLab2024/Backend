@@ -32,6 +32,7 @@ public class AuthenticationService {
     private final AuthenticationManager manager;
     private final JWTService jwtService;
 
+    /** CANDIDATA AL TESTING*/
     public UserPayload register(CredentialsDTO dto) {
         if (this.repository.findById(dto.email()).isPresent()) {
             return UserPayload
@@ -166,6 +167,7 @@ public class AuthenticationService {
                 .build();
     }
 
+    // DISTRUGGE IL DB :)
     @Transactional
     public Payload changeEmail(RegistrationDTO dto) {
         Optional<User> optU = this.repository.findById(dto.email());

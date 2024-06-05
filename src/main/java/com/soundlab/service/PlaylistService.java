@@ -34,7 +34,7 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
     private final PlaylistMapper playlistMapper;
     private final SongMapper songMapper;
 
-
+    // Funzione che prende in ingresso una libreria ed una canzone e restituisce le playlist della libreria in cui è presente
     public List<PlaylistDTO> playlistSongPresent(Long idLib, Long idSn){
 
         List<Playlist> playlists = this.playlistRepo.findPlaylistsByLib(idLib);
@@ -67,6 +67,7 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
     }
 
     @Transactional
+    /** CANDIDATA AL TESTING*/
     public Payload removeSong(AddRemoveSongDTO dto){
 
         // trovo la playlist a cui devo aggiungere la canzone
@@ -99,6 +100,7 @@ public class PlaylistService implements BaseService<Playlist, PlaylistDTO, Long,
     }
 
     @Transactional
+    /** CANDIDATA AL TESTING*/
     public Payload insertSong(AddRemoveSongDTO dto){
 
         // trovo la playlist a cui devo aggiungere la canzone

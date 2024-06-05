@@ -71,22 +71,6 @@ public class Initializer {
                 Playlist.builder().id(4L).name("quella").genre("no").favourite(false).songsNumber(0).library(l.get(1)).build()
         ));
 
-        // Creo degli artisti
-        List<Artist> a = new ArrayList<>();
-        a = artistRepository.saveAll(List.of(
-                Artist.builder().id(31L).name("Alberto Selly").nationality("Italy").build()
-        ));
-        List<Artist> ar = new ArrayList<>();
-        ar = artistRepository.saveAll(List.of(
-                Artist.builder().id(32L).name("Los del Río").nationality("Spain").build()
-        ));
-        // Creo delle canzoni e gli associo almeno un Artista
-        List<Song> s = new ArrayList<>();
-        s = songRepository.saveAll(List.of(
-                Song.builder().id(1L).title("O ball ro cavall").genre("Neomelodico").type(SongType.ORIGINAL).year(2012).artistsNumber(1).artists(a).build(),
-                Song.builder().id(2L).title("Macarena").genre("Pop").type(SongType.ORIGINAL).year(1993).artistsNumber(1).artists(ar).build()
-        ));
-
         // Popolo gli artisti nel DB
         List<Artist> arr = new ArrayList<>();
         arr = artistRepository.saveAll(List.of(
@@ -123,7 +107,7 @@ public class Initializer {
         ));
 
         List<Song> so = new ArrayList<>();
-        s = songRepository.saveAll(List.of(
+        so = songRepository.saveAll(List.of(
                 Song.builder().id(1L).title("Hello").genre("Pop").type(SongType.ORIGINAL).year(2015).artistsNumber(1).artists(arr.subList(0, 1)).build(),
                 Song.builder().id(2L).title("Rolling in the Deep").genre("Pop").type(SongType.ORIGINAL).year(2010).artistsNumber(1).artists(arr.subList(0, 1)).build(),
                 Song.builder().id(3L).title("Someone Like You").genre("Pop").type(SongType.ORIGINAL).year(2011).artistsNumber(1).artists(arr.subList(0, 1)).build(),
@@ -136,13 +120,29 @@ public class Initializer {
                 Song.builder().id(10L).title("Josephine").genre("Country").type(SongType.ORIGINAL).year(2012).artistsNumber(2).artists(arr.subList(1, 2)).build(),
                 Song.builder().id(11L).title("This Song's for You").genre("Country").type(SongType.ORIGINAL).year(2010).artistsNumber(2).artists(arr.subList(1, 2)).build(),
                 Song.builder().id(12L).title("I'll Fly Away").genre("Gospel").type(SongType.COVER).year(2016).artistsNumber(2).artists(arr.subList(1, 2)).build(),
-                Song.builder().id(13L).title("Meneame").genre("Pop, Latin Urban").type(SongType.ORIGINAL).year(2015).artistsNumber(1).artists(arr.subList(2, 3)).build(),
+                Song.builder().id(13L).title("Meneame").genre("Latin").type(SongType.ORIGINAL).year(2015).artistsNumber(1).artists(arr.subList(2, 3)).build(),
                 Song.builder().id(14L).title("Pressure").genre("Pop").type(SongType.ORIGINAL).year(2022).artistsNumber(1).artists(arr.subList(2, 3)).build(),
                 Song.builder().id(15L).title("Just Shutup and Dance").genre("Pop").type(SongType.ORIGINAL).year(2021).artistsNumber(1).artists(arr.subList(2, 3)).build(),
                 Song.builder().id(16L).title("Peaches").genre("Pop").type(SongType.ORIGINAL).year(2021).artistsNumber(1).artists(arr.subList(3, 4)).build(),
                 Song.builder().id(17L).title("Love Yourself").genre("Pop").type(SongType.ORIGINAL).year(2015).artistsNumber(1).artists(arr.subList(3, 4)).build(),
                 Song.builder().id(18L).title("Sorry").genre("Pop").type(SongType.ORIGINAL).year(2015).artistsNumber(1).artists(arr.subList(3, 4)).build(),
                 Song.builder().id(19L).title("What Do You Mean?").genre("Pop").type(SongType.ORIGINAL).year(2015).artistsNumber(1).artists(arr.subList(3, 4)).build()
+        ));
+
+        // Creo degli artisti
+        List<Artist> a = new ArrayList<>();
+        a = artistRepository.saveAll(List.of(
+                Artist.builder().id(31L).name("Alberto Selly").nationality("Italy").build()
+        ));
+        List<Artist> ar = new ArrayList<>();
+        ar = artistRepository.saveAll(List.of(
+                Artist.builder().id(32L).name("Los del Río").nationality("Spain").build()
+        ));
+        // Creo delle canzoni e gli associo almeno un Artista
+        List<Song> s = new ArrayList<>();
+        s = songRepository.saveAll(List.of(
+                Song.builder().id(20L).title("O ball ro cavall").genre("Neomelodico").type(SongType.ORIGINAL).year(2012).artistsNumber(1).artists(a).build(),
+                Song.builder().id(21L).title("Macarena").genre("Pop").type(SongType.ORIGINAL).year(1993).artistsNumber(1).artists(ar).build()
         ));
 
         // Aggiungo le canzoni create prima nelle playlist

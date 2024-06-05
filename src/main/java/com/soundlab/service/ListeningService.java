@@ -69,6 +69,8 @@ public class ListeningService implements BaseService<Listening, ListeningDTO, Lo
                 .toList();
     }
 
+    // INSCERISCE UN NUOVO ASCOLTO
+    /** CANDIDATA AL TESTING*/
     public Payload insertListening(AddRemoveListeningDTO dto){
 
         var u = userRepository.findById(dto.userId()).orElseThrow(()-> new UserNotFoundException("Utente non trovato"));
