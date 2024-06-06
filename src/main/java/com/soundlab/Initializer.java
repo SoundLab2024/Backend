@@ -36,6 +36,7 @@ public class Initializer {
 
     private final PasswordEncoder encoder;
 
+    /** Comment event listener when doing Tests*/
     @Async
     @EventListener(value = ApplicationReadyEvent.class)
     public void init() {
