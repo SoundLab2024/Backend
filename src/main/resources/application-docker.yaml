@@ -10,7 +10,7 @@ spring:
   application:
     name: soundlab
   datasource:
-    url: jdbc:postgresql://postgres:5432/soundlab
+    url: jdbc:postgresql://db:5432/soundlab
     username: root
     password: password
   ### JPA (Java Persistence API -> https://www.javatpoint.com/spring-boot-jpa) ###
@@ -18,7 +18,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       # create-drop good for testing, production set to non or commit
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
   servlet:
     multipart:

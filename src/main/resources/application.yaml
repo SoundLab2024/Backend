@@ -11,7 +11,7 @@ spring:
     name: soundlab
   datasource:
     url: jdbc:postgresql://localhost:5432/soundlab
-    username: root
+    username: postgres
     password: password
   ### JPA (Java Persistence API -> https://www.javatpoint.com/spring-boot-jpa) ###
   jpa:
